@@ -2,4 +2,4 @@
 
 Just a static site with hello world.
 
-Docker images are available on https://quay.io/repository/int128/hellopage.
+Docker images are available on https://gcr.io/int128-1313/github.com/int128/hellopage.
