@@ -1,0 +1,16 @@
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  build-image:
+    runs-on: ubuntu-latest
+    env:
+      DOCKER_BUILDKIT: 1
+      REPOSITORY: ghcr.io/int128/hellopage
+    steps:
+      - uses: actions/checkout@v2
+      - run: echo ${{ secrets.CR_PAT }} | docker login ghcr.io -u $GITHUB_ACTOR --password-stdin
+      - run: docker build . --tag $REPOSITORY:latest --cache-from $REPOSITORY:latest
+      - run: docker push $REPOSITORY:latest
