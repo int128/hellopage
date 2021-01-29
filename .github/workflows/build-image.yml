@@ -15,11 +15,11 @@ jobs:
     runs-on: ubuntu-latest
     env:
       DOCKER_BUILDKIT: 1
-      repository: ghcr.io/${{ github.repository }}
+      DOCKER_REPOSITORY: ghcr.io/${{ github.repository }}
     steps:
       - uses: actions/checkout@v2
-      - run: echo ${{ secrets.CR_PAT }} | docker login ghcr.io -u $GITHUB_ACTOR --password-stdin
-      - run: ([[ $GITHUB_REF == refs/tags/* ]] && echo tag=${GITHUB_REF##*/} || echo tag=latest) >> $GITHUB_ENV
-      - run: docker build . --tag $repository:$tag --cache-from $repository:latest
-      - run: docker push $repository:$tag
+      - run: echo "${{ secrets.CR_PAT }}" | docker login ghcr.io -u "$GITHUB_ACTOR" --password-stdin
+      - run: ([[ $GITHUB_REF == refs/tags/* ]] && echo "tag=${GITHUB_REF##*/}" || echo tag=latest) >> "$GITHUB_ENV"
+      - run: docker build . --tag "$DOCKER_REPOSITORY:$tag" --cache-from "$DOCKER_REPOSITORY:latest"
+      - run: docker push "$DOCKER_REPOSITORY:$tag"
         if: github.event_name == 'push'
