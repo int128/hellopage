@@ -13,8 +13,6 @@ on:
 jobs:
   build-push:
     runs-on: ubuntu-latest
-    env:
-      DOCKER_BUILDKIT: 1
     steps:
       - uses: actions/checkout@v2
       - uses: docker/metadata-action@v3
